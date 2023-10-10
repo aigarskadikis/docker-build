@@ -1,4 +1,4 @@
-FROM zabbix/zabbix-proxy-sqlite3:ol-6.0.5
+FROM zabbix/zabbix-proxy-sqlite3:ol-6.0.4
 
 USER root
 
