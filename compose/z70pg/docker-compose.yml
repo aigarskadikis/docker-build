@@ -1,0 +1,26 @@
+version: "3"
+services:
+  z70pg:
+    image: zabbix/zabbix-server-pgsql:alpine-7.0.0
+    container_name: z70pg
+    ports:
+      - "17051:10051"
+    environment:
+      - TZ=Europe/Riga
+      - DB_SERVER_HOST=pg16
+      - DB_SERVER_PORT=7416
+      - POSTGRES_DB=z70
+      - POSTGRES_USER=zabbix
+      - POSTGRES_PASSWORD=zabbix
+      - ZBX_STARTPOLLERS=1
+      - ZBX_STARTPREPROCESSORS=1
+      - ZBX_STARTTRAPPERS=2
+      - ZBX_STARTDISCOVERERS=0
+      - ZBX_STARTHISTORYPOLLERS=1
+      - ZBX_STARTALERTERS=1
+      - ZBX_STARTJAVAPOLLERS=0
+      - ZBX_STARTLLDPROCESSORS=1
+      - ZBX_CACHESIZE=256M
+      - ZBX_STARTDBSYNCERS=1
+
+# podman-compose up --detach --build
