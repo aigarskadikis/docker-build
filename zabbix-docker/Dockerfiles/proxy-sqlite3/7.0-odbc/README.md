@@ -57,13 +57,13 @@ podman logs -f mysql80 | grep "GENERATED ROOT PASSWORD"
 
 ### MS SQL 2019 database
 ```
-podman run \
+podman run --detach \
 --name=mssql \
 --net podman --ip 10.88.20.19 \
- --env 'ACCEPT_EULA=Y' \
- --env 'SA_PASSWORD=Winter2019' \
+--env 'ACCEPT_EULA=Y' \
+--env 'SA_PASSWORD=Winter2019' \
 -p 1433:1433 \
---detach mcr.microsoft.com/mssql/server:2019-CU10-ubuntu-20.04
+mcr.microsoft.com/mssql/server:2019-CU10-ubuntu-20.04
 ```
 
 fetch sample item
@@ -81,9 +81,27 @@ SELECT object_name,counter_name,instance_name,cntr_value FROM sys.dm_os_performa
 podman run --detach \
 --name oracle19c \
 --net podman --ip 10.88.19.19 \
- --env ORACLE_SID=test \
- --env ORACLE_PWD=Password123 \
--v oracle-db:/opt/oracle/oradata \
+--env ORACLE_SID=test \
+--env ORACLE_PWD=Password123 \
+--volume oracle-db:/opt/oracle/oradata \
 --restart unless-stopped \
 oracle/database:19.3.0-ee
 ```
+
+Macros:
+```
+  {$ORACLE.DRIVER} = /usr/lib/oracle/19.15/client64/lib/libsqora.so.19.1 
+    {$ORACLE.HOST} = 10.88.19.19
+    {$ORACLE.PORT} = 1521
+ {$ORACLE.SERVICE} = test
+    {$ORACLE.USER} = system
+{$ORACLE.PASSWORD} = Password123
+```
+
+
+Item
+```
+db.odbc.get[get_db,,"Driver={$ORACLE.DRIVER};DBQ=//{$ORACLE.HOST}:{$ORACLE.PORT}/{$ORACLE.SERVICE};"]
+```
+
+
