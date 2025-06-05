@@ -33,6 +33,35 @@ podman stop odbc-prx-7.0; podman rm odbc-prx-7.0; podman run --name odbc-prx-7.0
 --detach aigarskadikis/zabbix-proxy-sqlite3:7.0.13-odbc
 ```
 
+Minimal Passive Zabbix proxy, with ODBC-only support
+```
+podman stop odbc-prx-7.0; podman rm odbc-prx-7.0; podman run \
+--detach \
+--env ZBX_CACHESIZE='256M' \
+--env ZBX_ENABLEREMOTECOMMANDS='1' \
+--env ZBX_HOSTNAME='odbc' \
+--env ZBX_PROXYMODE='1' \
+--env ZBX_PROXYOFFLINEBUFFER='8' \
+--env ZBX_SERVER_HOST='zs.ext' \
+--env ZBX_STARTAGENTPOLLERS='0' \
+--env ZBX_STARTBROWSERPOLLERS='0' \
+--env ZBX_STARTDBSYNCERS='1' \
+--env ZBX_STARTDISCOVERERS='0' \
+--env ZBX_STARTHTTPAGENTPOLLERS='0' \
+--env ZBX_STARTHTTPPOLLERS='0' \
+--env ZBX_STARTPINGERS='0' \
+--env ZBX_STARTPOLLERS='0' \
+--env ZBX_STARTPOLLERSUNREACHABLE='0' \
+--env ZBX_STARTPREPROCESSORS='1' \
+--env ZBX_STARTSNMPPOLLERS='0' \
+--env ZBX_STARTTRAPPERS='2' \
+--name odbc-prx-7.0 \
+--net podman --ip 10.88.7.70 \
+--publish 37051:10051 \
+--tty \
+aigarskadikis/zabbix-proxy-sqlite3:7.0.13-odbc; podman logs -f odbc-prx-7.0
+```
+
 ## Smaple DB flavors
 
 ### Oracle MySQL 8.0
